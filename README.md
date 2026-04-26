@@ -1,7 +1,5 @@
 # Mikrotik - OpenTofu
 
-[![Thumbnail](docs/img/thumbnail.png)](docs/img/thumbnail.png)
-
 This repository contains [OpenTofu](https://opentofu.org/) automation for my entire Mikrotik-powered home network, applied and orchestrated via [Terragrunt](https://terragrunt.gruntwork.io/).
 
 The purpose of this repository is to provide a structured and repeatable way to manage and automate the setup of my MikroTik devices using Infrastructure as Code (IaC) principles.
@@ -22,51 +20,19 @@ Fundamentally speaking, there is nothing that sets this approach apart from, say
 
    Not everything in life has to have a good reason. Sometimes reinventing the wheel just to learn or doing things for the heck of it are valid reasons.
 
-## 🌐 Network Overview
-
-[![Network Diagram](docs/img/network-diagram.drawio.png)](docs/img/network-diagram.drawio.png)
-
-This project provides automated deployment and management for the following devices in my infrastructure:
-
-- **RB5009 router** -> main router + firewall + CAPSMAN server
-- **cAP AX Access Point** -> provisioned via CAPSMAN
-- **CRS317 switch** -> High-performance 10G switch for server connectivity
-- **CRS326 switch** -> Main Rack Switch
-- **Hex switch** -> Living Room Switch (no AP functionality used here)
-
-I was initially planning to also add some more details about my network, like VLAN setup and wireless networks and whatnot, but then I realised I can't really be bothered to also update those whenever I change something, so if you're curious, feel free to look at the code!
-
 ## 📁 Project Structure
 
 ```bash
-├── .github/                # Various repo configuration/metadata files
-│   ├── actions/            # Custom GitHub actions...
-│   │   └── load-secrets/   # ...loads secrets from 1Pass as env vars
-│   └── workflows/          # GitHub workflow configurations and automation
-├── docs/img                # Network Diagram(s)
 ├── infrastructure/         # Terragrunt configurations
-│   ├── 1password/          # 1Password secret injection
-│   │   ├── Badoink/        # WiFi passphrases for the Badoink vault
-│   │   ├── mikrotik-users/ # RouterOS user credentials
-│   │   └── mikrotik-wireguard-keys/ # WireGuard key pairs
-│   ├── cloudflare/         # Cloudflare DNS records
-│   │   ├── primary/        # Primary zone (mirceanton.com)
-│   │   └── secondary/      # Secondary zone
 │   └── mikrotik/           # MikroTik device configurations
 │       ├── globals.hcl     # Shared global variables (VLANs, DNS, users, etc.)
-│       ├── router-rb5009/  # RB5009 router base configuration
-│       │   └── services/   # Router services (DHCP, DNS, firewall, WireGuard, etc.)
-│       ├── switch-crs317/  # CRS317 switch configuration
-│       ├── switch-crs326/  # CRS326 switch configuration
-│       └── switch-hex/     # Hex switch configuration
-├── root.hcl               # Root Terragrunt configuration (remote state)
+│       ├── router-ccr2004/  # CCR2004 router base configuration
+│       │   └── services/   # Router services (DHCP, DNS, firewall, etc.)
 └── README.md              # This file, lol
 ```
 
 > Reusable OpenTofu modules have been extracted into dedicated repositories:
 > [`terraform-modules-routeros`](https://github.com/mirceanton/terraform-modules-routeros),
-> [`terraform-modules-1password`](https://github.com/mirceanton/terraform-modules-1password),
-> [`terraform-modules-cloudflare`](https://github.com/mirceanton/terraform-modules-cloudflare)
 
 ## 🚀 Getting Started
 
@@ -74,9 +40,6 @@ I was initially planning to also add some more details about my network, like VL
 
 - [OpenTofu](https://opentofu.org/) - Infrastructure as Code tool (`terraform` also works)
 - [Terragrunt](https://terragrunt.gruntwork.io/) - OpenTofu/Terraform orchestrator
-- [1pass cli](https://developer.1password.com/docs/cli/) - for injecting secrets into 1Password vaults
-- [mise](https://mise.jdx.dev/) for managing dependencies
-- Access to a [BackBlaze](https://www.backblaze.com/) B2 bucket for remote state storage or any other S3 compatible service
 
 ### 🔧 Initial Device Setup
 
@@ -90,28 +53,7 @@ This project uses environment variables for sensitive configuration. Set up the 
 # MikroTik device credentials
 export MIKROTIK_USERNAME="your_username"
 export MIKROTIK_PASSWORD="your_password"
-
-# ISP credentials (for PPPoE)
-export PPPOE_USERNAME="your_pppoe_username"
-export PPPOE_PASSWORD="your_pppoe_password"
-
-# For injecting secrets into 1Password vaults
-export OP_SERVICE_ACCOUNT_TOKEN="onepassword token here"
 ```
-
-### ☁️ Remote State Configuration
-
-This project uses BackBlaze B2 for remote state storage. The state configuration is defined in `root.hcl` and automatically manages state files for each device configuration.
-
-To authenticate against the B2 API endpoint, you need these environment variables configured:
-
-```bash
-export AWS_ACCESS_KEY_ID="your_b2_key_id"
-export AWS_SECRET_ACCESS_KEY="your_b2_application_key"
-```
-
-Previously, I was using local state files with [SOPS](https://github.com/getsops/sops) encryption to manage sensitive data in the state. While this approach worked, I ultimately decided to migrate to remote state storage to simplify the workflow by removing the encryption/decryption step, and also to stop polluting my commit history with redundant `chore: terraform apply` commits.
-This may prove to be problematic if I end up cutting my own internet access during an `apply`... but he who lives by the sword, he also dies by it 🗿
 
 ## ⚠️ Limitations
 

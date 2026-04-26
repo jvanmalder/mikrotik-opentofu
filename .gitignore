@@ -2,3 +2,7 @@
 .terragrunt-cache/
 backend.tf
 .envrc
+*_output.txt
+provider.tf
+*.tfstate
+*.tfstate.backup
