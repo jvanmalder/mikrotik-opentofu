@@ -40,7 +40,7 @@ jobs:
           OP_CONNECT_TOKEN: ${{ secrets.OP_CONNECT_TOKEN }}
         run: |
           set -o pipefail
-          terragrunt run --all --no-color -- plan --detailed-exitcode 2>&1 | tee plan_output.txt
+          terragrunt run --all --no-color -- plan --detailed-exitcode 2>&1 | tee plan_output.txt || true
           TG_EXIT="${PIPESTATUS[0]}"
 
           if [ "$TG_EXIT" -eq 0 ]; then
