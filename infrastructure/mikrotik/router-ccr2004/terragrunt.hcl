@@ -33,7 +33,7 @@ inputs = {
     "sfp-sfpplus7" = {}
     "sfp-sfpplus8" = {}
     "sfp-sfpplus9" = {}
-    "sfp-sfpplus10" = {}
+    "sfp-sfpplus10" = { comment = "WiFi", untagged = local.mikrotik_globals.vlans.Trusted.name }
     "sfp-sfpplus11" = { comment = "LAN" }
     "sfp-sfpplus12" = { comment = "IoT", tagged = [local.mikrotik_globals.vlans.IoT.name, local.mikrotik_globals.vlans.Management.name] }
     "sfp28-1"       = {}

@@ -23,5 +23,6 @@ locals {
   vlans = {
     IoT   = { name = "IoT", vlan_id = 10 }
     Management = { name = "Management", vlan_id = 20 }
+    Trusted = { name = "Trusted", vlan_id = 30 }
   }
 }
