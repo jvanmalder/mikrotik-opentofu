@@ -12,6 +12,7 @@ inputs = {
   gateway     = "192.168.10.1"
   dhcp_pool   = ["192.168.10.100-192.168.10.199"]
   dns_servers = ["192.168.10.1"]
+  domain      = "iot.chateau"
 
   static_leases = {
     "192.168.10.3"  = { name = "home-assistant", mac = "B8:27:EB:EA:4C:46" }

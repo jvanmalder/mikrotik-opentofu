@@ -12,6 +12,7 @@ inputs = {
   gateway     = "10.0.0.1"
   dhcp_pool   = ["10.0.0.195-10.0.0.199"]
   dns_servers = ["10.0.0.1"]
+  domain      = "mgmt.chateau"
 
   static_leases = {
     "10.0.0.2"  = { name = "mikrotik-css610", mac = "F4:1E:57:C4:BB:EC" }
