@@ -18,5 +18,6 @@ inputs = {
     "192.168.10.3"  = { name = "home-assistant", mac = "B8:27:EB:EA:4C:46" }
     "192.168.10.4"  = { name = "kiosk", mac = "E4:5F:01:05:3F:50" }
     "192.168.10.5"  = { name = "laadpaal", mac = "C8:DF:84:97:D4:69" }
+    "192.168.10.6"  = { name = "pioneer", mac = "00:09:B0:EB:DD:DC" }
   }
 }

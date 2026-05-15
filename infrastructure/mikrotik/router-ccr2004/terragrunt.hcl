@@ -33,7 +33,7 @@ inputs = {
     "sfp-sfpplus7" = {}
     "sfp-sfpplus8" = { comment = "NAS 10g 1", bridge_port = false, l2mtu = 9216, mtu = 9000 }
     "sfp-sfpplus9" = { comment = "NAS 10g 2", bridge_port = false, l2mtu = 9216, mtu = 9000 }
-    "sfp-sfpplus10" = { comment = "WiFi", untagged = local.mikrotik_globals.vlans.Trusted.name }
+    "sfp-sfpplus10" = { comment = "WiFi", untagged = local.mikrotik_globals.vlans.Trusted.name, tagged = [local.mikrotik_globals.vlans.IoT.name] }
     "sfp-sfpplus11" = { comment = "LAN" }
     "sfp-sfpplus12" = { comment = "IoT", tagged = [local.mikrotik_globals.vlans.IoT.name, local.mikrotik_globals.vlans.Management.name] }
     "sfp28-1"       = {}
